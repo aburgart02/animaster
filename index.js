@@ -2,6 +2,7 @@ addListeners();
 
 
 function animaster() {
+
     return {
         move: function (element, duration, translation) {
             element.style.transitionDuration = `${duration}ms`;
@@ -18,22 +19,23 @@ function animaster() {
         },
         fadeOut: function (element, duration) {
             element.style.transitionDuration = `${duration}ms`;
-            element.classList.add('hide');
             element.classList.remove('show');
+            element.classList.add('hide');
         },
         moveAndHide: function(element, duration) {
             this.move(element, 2 * duration / 5, {x: 100, y: 20});
             this.fadeOut(element, 3 * duration / 5);
         },
         showAndHide: function(element, duration) {
-            element.style.transitionDuration =  `${duration}ms`;
-            element.classList.add('hide');
-            element.classList.remove('show');
+            const x = duration / 3;
+            setTimeout(() => {
+                this.fadeOut(element, x)
+            }, x * 2)
+            this.fadeIn(element, x);
         },
         heartBeating: function(element, duration) {
-            element.style.transitionDuration =  `${duration}ms`;
-            element.classList.add('hide');
-            element.classList.remove('show');
+            this.scale(element, duration, 1.4);
+            this.scale(element, duration, 1);
         }
     };
 }
@@ -73,13 +75,13 @@ function addListeners() {
     document.getElementById('showAndHidePlay')
         .addEventListener('click', function () {
             const block = document.getElementById('showAndHideBlock');
-            animaster().showAndHide(block, 1000, 1.25);
+            animaster().showAndHide(block, 1000);
         });
 
     document.getElementById('heartBeatingPlay')
         .addEventListener('click', function () {
             const block = document.getElementById('heartBeatingBlock');
-            animaster().heartBeating(block, 1000, 1.25);
+            animaster().heartBeating(block, 1000);
         });
 }
 function getTransform(translation, ratio) {
