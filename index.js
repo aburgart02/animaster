@@ -12,9 +12,14 @@ function animaster() {
             element.classList.remove('hide');
             element.classList.add('show');
         },
-        scale: function scale(element, duration, ratio) {
+        scale: function(element, duration, ratio) {
             element.style.transitionDuration =  `${duration}ms`;
             element.style.transform = getTransform(null, ratio);
+        },
+        fadeOut: function(element, duration) {
+            element.style.transitionDuration =  `${duration}ms`;
+            element.classList.add('hide');
+            element.classList.remove('show');
         }
     }
     return obj;
@@ -26,6 +31,12 @@ function addListeners() {
         .addEventListener('click', function () {
             const block = document.getElementById('fadeInBlock');
             animaster().fadeIn(block, 5000);
+        });
+
+    document.getElementById('fadeOutPlay')
+        .addEventListener('click', function () {
+            const block = document.getElementById('fadeOutBlock');
+            animaster().fadeOut(block, 5000);
         });
 
     document.getElementById('movePlay')
